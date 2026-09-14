@@ -10,6 +10,8 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        ink: "h-11 rounded-none border border-foreground bg-foreground px-5 font-body font-semibold text-background hover:-translate-y-0.5 hover:bg-cobalt",
+        coral: "h-14 rounded-none border border-foreground bg-coral px-7 font-body font-semibold text-foreground shadow-editorial hover:-translate-y-1 hover:shadow-editorial-lg",
         portfolio:
           "h-12 rounded-full border-2 border-foreground bg-coral px-6 font-display font-bold text-coral-foreground shadow-pop hover:-translate-y-1 hover:shadow-pop-lg",
         portfolioOutline:

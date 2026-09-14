@@ -7,3 +7,4 @@
 - [ ] Recréer visuellement la connexion et tout le tableau de bord administrateur.
 - [ ] Préserver une architecture compatible avec la gestion dynamique et le tableau de bord.
 - [ ] Vérifier le résultat sur ordinateur et mobile.
+- [ ] Utiliser le visuel de projet partagé comme référence pour une présentation plus concrète et plus parlante.
