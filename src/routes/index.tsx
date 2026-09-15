@@ -45,7 +45,8 @@ function Reveal({ children, className = "" }: { children: ReactNode; className?:
 }
 
 function PortfolioPage() {
-  const { data } = useQuery(portfolioQuery);
+  const loaderData = Route.useLoaderData();
+  const { data } = useQuery({ ...portfolioQuery, initialData: loaderData });
   const { profile, entries } = data ?? fallbackPortfolio;
   const projects = entries.filter((item) => item.type === "project");
   const skills = entries.filter((item) => item.type === "skill");
