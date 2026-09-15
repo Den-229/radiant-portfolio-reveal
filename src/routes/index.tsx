@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDownRight, ArrowUpRight, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { portfolioQuery } from "@/lib/portfolio";
+import { portfolioQuery, fallbackPortfolio } from "@/lib/portfolio";
 import projectBmb from "@/assets/project-bmb.jpg";
 import projectSchool from "@/assets/project-school.jpg";
 import stockAsset from "@/assets/project-stock-reference.jpg.asset.json";
