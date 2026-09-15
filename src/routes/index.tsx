@@ -11,11 +11,11 @@ import stockAsset from "@/assets/project-stock-reference.jpg.asset.json";
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
     try {
-      await context.queryClient.ensureQueryData(portfolioQuery);
+      return await context.queryClient.ensureQueryData(portfolioQuery);
     } catch {
       // Le contenu se rechargera côté client ; la page reste affichable.
+      return fallbackPortfolio;
     }
-    return null;
   },
   head: () => ({ meta: [
     { title: "Denis ASSOGBA — Développeur Web & Mobile" },
