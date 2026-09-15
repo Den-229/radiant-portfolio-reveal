@@ -55,8 +55,8 @@ function PortfolioPage() {
 
     <section id="accueil" className="hero-shell">
       <div className="hero-copy">
-        <p className="eyebrow"><span /> {profile.availability}</p>
-        <h1><em>Denis</em><br />ASSOGBA</h1>
+        <p className="eyebrow"><span /> {profile.name} · {profile.availability}</p>
+        <h1>Je crée des<br /><em>expériences digitales</em><br />qui comptent.</h1>
         <div className="hero-bottom"><p>{profile.tagline}</p><a href="#projets" aria-label="Voir les projets"><ArrowDownRight /></a></div>
       </div>
       <div className="hero-showcase">
@@ -64,7 +64,7 @@ function PortfolioPage() {
         <div className="hero-device"><img src={stockAsset.url} alt="Interface d’une application de gestion conçue par Denis Assogba" /></div>
         <span className="hero-note">Des outils clairs.<br />Des résultats concrets.</span>
       </div>
-      <p className="hero-role">{profile.role}<br /><span><MapPin /> {profile.location}</span></p>
+      <p className="hero-role">DENIS ASSOGBA — {profile.role}<br /><span><MapPin /> {profile.location}</span></p>
     </section>
 
     <div className="ticker"><div>{[0,1].map((copy) => <span key={copy}>APPLICATIONS WEB <b>✦</b> MOBILE <b>✦</b> API & MÉTIER <b>✦</b> EXPÉRIENCE UTILISATEUR <b>✦</b></span>)}</div></div>
