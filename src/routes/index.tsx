@@ -9,7 +9,14 @@ import projectSchool from "@/assets/project-school.jpg";
 import stockAsset from "@/assets/project-stock-reference.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
-  loader: ({ context }) => context.queryClient.ensureQueryData(portfolioQuery),
+  loader: async ({ context }) => {
+    try {
+      await context.queryClient.ensureQueryData(portfolioQuery);
+    } catch {
+      // Le contenu se rechargera côté client ; la page reste affichable.
+    }
+    return null;
+  },
   head: () => ({ meta: [
     { title: "Denis ASSOGBA — Développeur Web & Mobile" },
     { name: "description", content: "Portfolio de Denis ASSOGBA, développeur de solutions web, mobiles et métiers." },
