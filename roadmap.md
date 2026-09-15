@@ -8,3 +8,4 @@
 - [ ] Préserver une architecture compatible avec la gestion dynamique et le tableau de bord.
 - [ ] Vérifier le résultat sur ordinateur et mobile.
 - [ ] Utiliser le visuel de projet partagé comme référence pour une présentation plus concrète et plus parlante.
+- [ ] Fusionner les nouvelles références en une direction sombre premium centrée sur les projets, sans reprendre leurs identités.
