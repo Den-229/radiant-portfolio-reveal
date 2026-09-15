@@ -1,6 +1,6 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowDownRight, ArrowUpRight, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { portfolioQuery } from "@/lib/portfolio";
