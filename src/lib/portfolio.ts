@@ -25,6 +25,22 @@ export type PortfolioEntry = {
   sort_order: number;
 };
 
+export const fallbackPortfolio: { profile: PortfolioProfile; entries: PortfolioEntry[] } = {
+  profile: {
+    id: 1,
+    name: "Denis ASSOGBA",
+    role: "Développeur Web & Mobile",
+    tagline:
+      "Je conçois des applications web, mobiles et métiers claires, rapides et utiles.",
+    location: "Bénin",
+    email: "contact@denisassogba.com",
+    linkedin: "https://www.linkedin.com",
+    github: "",
+    availability: "Disponible pour de nouveaux projets",
+  },
+  entries: [],
+};
+
 export const portfolioQuery = queryOptions({
   queryKey: ["portfolio"],
   queryFn: async () => {
