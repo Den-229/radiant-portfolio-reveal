@@ -1,15 +1,22 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowDownRight, ArrowUpRight, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { portfolioQuery } from "@/lib/portfolio";
+import { portfolioQuery, fallbackPortfolio } from "@/lib/portfolio";
 import projectBmb from "@/assets/project-bmb.jpg";
 import projectSchool from "@/assets/project-school.jpg";
 import stockAsset from "@/assets/project-stock-reference.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
-  loader: ({ context }) => context.queryClient.ensureQueryData(portfolioQuery),
+  loader: async ({ context }) => {
+    try {
+      return await context.queryClient.ensureQueryData(portfolioQuery);
+    } catch {
+      // Le contenu se rechargera côté client ; la page reste affichable.
+      return fallbackPortfolio;
+    }
+  },
   head: () => ({ meta: [
     { title: "Denis ASSOGBA — Développeur Web & Mobile" },
     { name: "description", content: "Portfolio de Denis ASSOGBA, développeur de solutions web, mobiles et métiers." },
@@ -38,8 +45,9 @@ function Reveal({ children, className = "" }: { children: ReactNode; className?:
 }
 
 function PortfolioPage() {
-  const { data } = useSuspenseQuery(portfolioQuery);
-  const { profile, entries } = data;
+  const loaderData = Route.useLoaderData();
+  const { data } = useQuery({ ...portfolioQuery, initialData: loaderData });
+  const { profile, entries } = data ?? fallbackPortfolio;
   const projects = entries.filter((item) => item.type === "project");
   const skills = entries.filter((item) => item.type === "skill");
   const experiences = entries.filter((item) => item.type === "experience");
