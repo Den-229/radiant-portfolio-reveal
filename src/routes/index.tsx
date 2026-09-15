@@ -38,8 +38,8 @@ function Reveal({ children, className = "" }: { children: ReactNode; className?:
 }
 
 function PortfolioPage() {
-  const { data } = useSuspenseQuery(portfolioQuery);
-  const { profile, entries } = data;
+  const { data } = useQuery(portfolioQuery);
+  const { profile, entries } = data ?? fallbackPortfolio;
   const projects = entries.filter((item) => item.type === "project");
   const skills = entries.filter((item) => item.type === "skill");
   const experiences = entries.filter((item) => item.type === "experience");
