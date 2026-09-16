@@ -123,4 +123,13 @@ body { background-image: radial-gradient(circle at 75% 12%,color-mix(in oklab,va
 .quotes-band { color:var(--background); }
 .contact-band { background:linear-gradient(135deg,color-mix(in oklab,var(--cobalt) 72%,var(--background)),var(--background)); color:var(--foreground); }
 @keyframes device-float { 50% { transform:perspective(900px) translateY(-12px) rotateY(0deg) rotateX(0deg); } }
-@media(max-width:800px){.hero-shell{grid-template-columns:1fr;gap:34px}.hero-copy h1{font-size:clamp(48px,14vw,68px)}.hero-showcase{min-height:420px;border-radius:22px}.hero-device{top:19%}}
+
+/* Portrait héro */
+.hero-portrait-shell { display:flex; align-items:flex-end; justify-content:center; overflow:hidden; }
+.hero-portrait-shell::before { inset:auto -10% -12% -10%; top:auto; height:62%; background:radial-gradient(60% 100% at 50% 100%,color-mix(in oklab,var(--mint) 45%,transparent),transparent 70%); filter:blur(18px); transform:none; }
+.hero-portrait { position:relative; z-index:2; width:86%; max-height:96%; object-fit:cover; object-position:top center; filter:grayscale(.15) contrast(1.05); mask-image:linear-gradient(180deg,#000 74%,transparent 100%); animation:portrait-rise 1s cubic-bezier(.22,1,.36,1) both; }
+.hero-device { width:44%; left:auto; right:-4%; top:auto; bottom:12%; z-index:3; }
+.hero-device img { aspect-ratio:16/11; }
+@keyframes portrait-rise { from { opacity:0; transform:translateY(34px) scale(1.02); } }
+@media(prefers-reduced-motion:reduce){.hero-portrait{animation:none}}
+@media(max-width:800px){.hero-shell{grid-template-columns:1fr;gap:34px}.hero-copy h1{font-size:clamp(48px,14vw,68px)}.hero-showcase{min-height:460px;border-radius:22px}.hero-device{width:52%;right:-2%;bottom:8%}}
