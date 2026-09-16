@@ -7,6 +7,7 @@ import { portfolioQuery, fallbackPortfolio } from "@/lib/portfolio";
 import projectBmb from "@/assets/project-bmb.jpg";
 import projectSchool from "@/assets/project-school.jpg";
 import stockAsset from "@/assets/project-stock-reference.jpg.asset.json";
+import portraitAsset from "@/assets/denis-portrait.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
@@ -67,9 +68,10 @@ function PortfolioPage() {
         <h1>Je crée des<br /><em>expériences digitales</em><br />qui comptent.</h1>
         <div className="hero-bottom"><p>{profile.tagline}</p><a href="#projets" aria-label="Voir les projets"><ArrowDownRight /></a></div>
       </div>
-      <div className="hero-showcase">
+      <div className="hero-showcase hero-portrait-shell">
         <div className="hero-orbit">WEB · MOBILE · PRODUIT ·</div>
-        <div className="hero-device"><img src={stockAsset.url} alt="Interface d’une application de gestion conçue par Denis Assogba" /></div>
+        <img className="hero-portrait" src={portraitAsset.url} alt={`Portrait de ${profile.name}, ${profile.role}`} width={748} height={1600} />
+        <div className="hero-device"><img src={stockAsset.url} alt="Interface d’une application de gestion conçue par Denis Assogba" loading="lazy" /></div>
         <span className="hero-note">Des outils clairs.<br />Des résultats concrets.</span>
       </div>
       <p className="hero-role">DENIS ASSOGBA — {profile.role}<br /><span><MapPin /> {profile.location}</span></p>
