@@ -136,7 +136,7 @@ function PortfolioPage() {
       <Reveal><SectionTitle eyebrow="Services">Les solutions que <span>je propose</span></SectionTitle></Reveal>
       <div className="services-grid">
         {skills.map((skill, index) => {
-          const Icon = serviceIcons[index % serviceIcons.length];
+          const Icon = serviceIcons[index % serviceIcons.length] ?? Code2;
           return <Reveal key={skill.id}><article><Icon /><span>0{index + 1}</span><h3>{skill.title}</h3><p>{skill.description}</p></article></Reveal>;
         })}
       </div>
