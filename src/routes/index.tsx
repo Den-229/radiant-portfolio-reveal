@@ -12,6 +12,7 @@ import {
   Smartphone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ContactForm } from "@/components/contact-form";
 import { portfolioQuery, fallbackPortfolio } from "@/lib/portfolio";
 import projectBmb from "@/assets/project-bmb.jpg";
 import projectSchool from "@/assets/project-school.jpg";
@@ -70,12 +71,13 @@ function PortfolioPage() {
   const experiences = entries.filter((item) => item.type === "experience");
   const education = entries.filter((item) => item.type === "education");
   const testimonials = entries.filter((item) => item.type === "testimonial");
+  const portrait = profile.photo_path || portraitAsset.url;
 
   return <main className="portfolio-page">
     <header className="site-header">
       <a href="#accueil" className="brand" aria-label="Retour à l’accueil"><span>DA</span><strong>Denis.</strong></a>
       <nav aria-label="Navigation principale"><a href="#accueil">Accueil</a><a href="#apropos">À propos</a><a href="#projets">Projets</a><a href="#services">Services</a><a href="#contact">Contact</a></nav>
-      <Button asChild variant="ink"><a href={`mailto:${profile.email}`}>Écrivez-moi <ArrowUpRight /></a></Button>
+       <Button asChild variant="ink"><a href="#contact">Écrivez-moi <ArrowUpRight /></a></Button>
     </header>
 
     <section id="accueil" className="hero-shell">
@@ -93,7 +95,7 @@ function PortfolioPage() {
         <div className="portrait-lines" aria-hidden="true" />
         <div className="glow-sphere sphere-one" aria-hidden="true" />
         <div className="glow-sphere sphere-two" aria-hidden="true" />
-        <img src={portraitAsset.url} alt={`Portrait de ${profile.name}`} width={748} height={1600} />
+         <img src={portrait} alt={`Portrait de ${profile.name}`} width={748} height={1600} />
       </div>
     </section>
 
@@ -104,7 +106,7 @@ function PortfolioPage() {
     <section id="apropos" className="about-section content-shell">
       <Reveal className="about-portrait">
         <div className="portrait-rings" aria-hidden="true" />
-        <img src={portraitAsset.url} alt={`${profile.name}, développeur web et mobile`} loading="lazy" />
+         <img src={portrait} alt={`${profile.name}, développeur web et mobile`} loading="lazy" />
       </Reveal>
       <Reveal className="about-content">
         <SectionTitle eyebrow="À propos">Je suis disponible pour vos <span>projets digitaux</span></SectionTitle>
@@ -124,7 +126,7 @@ function PortfolioPage() {
         <div className="project-grid">
           {projects.map((project, index) => <Reveal key={project.id}>
             <article className="project-card">
-              <div className="project-image"><img src={projectImages[index % projectImages.length]} alt={`Aperçu du projet ${project.title}`} loading={index === 0 ? "eager" : "lazy"} /></div>
+               <div className="project-image"><img src={project.image_path || projectImages[index % projectImages.length]} alt={`Aperçu du projet ${project.title}`} loading={index === 0 ? "eager" : "lazy"} /></div>
               <div className="project-meta"><div><p>{project.subtitle}</p><h3>{project.title}</h3></div>{project.link ? <a href={project.link} aria-label={`Voir ${project.title}`}><ArrowUpRight /></a> : <span><ArrowUpRight /></span>}</div>
             </article>
           </Reveal>)}
@@ -154,8 +156,8 @@ function PortfolioPage() {
 
     {testimonials.length > 0 && <section className="testimonials-section content-shell"><SectionTitle eyebrow="Témoignages">Ils parlent de <span>mon travail</span></SectionTitle>{testimonials.map((item) => <blockquote key={item.id}>“{item.description}”<footer>{item.title} — {item.subtitle}</footer></blockquote>)}</section>}
 
-    <section id="contact" className="contact-section">
-      <div className="content-shell contact-layout"><div><p>Vous avez un projet ?</p><h2>Créons quelque chose de <span>remarquable.</span></h2></div><div><p><MapPin /> {profile.location} · {profile.availability}</p><Button asChild variant="ink"><a href={`mailto:${profile.email}`}>{profile.email}<ArrowUpRight /></a></Button></div></div>
+     <section id="contact" className="contact-section">
+       <div className="content-shell contact-layout"><div><p>Vous avez un projet ?</p><h2>Créons quelque chose de <span>remarquable.</span></h2><p className="contact-location"><MapPin /> {profile.location} · {profile.availability}</p><a className="contact-email" href={`mailto:${profile.email}`}>{profile.email}<ArrowUpRight /></a></div><ContactForm /></div>
     </section>
 
     <footer className="site-footer"><a href="#accueil" className="brand"><span>DA</span><strong>Denis.</strong></a><p>© 2026 {profile.name}</p><a href="/admin/login">Administration</a></footer>
