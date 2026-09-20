@@ -14,12 +14,46 @@ export type Database = {
   }
   public: {
     Tables: {
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: number
+          message: string
+          name: string
+          status: string
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: number
+          message: string
+          name: string
+          status?: string
+          subject?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: number
+          message?: string
+          name?: string
+          status?: string
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       portfolio_entries: {
         Row: {
           created_at: string
           description: string
           featured: boolean
           id: number
+          image_path: string
           link: string
           period: string
           sort_order: number
@@ -33,6 +67,7 @@ export type Database = {
           description?: string
           featured?: boolean
           id?: number
+          image_path?: string
           link?: string
           period?: string
           sort_order?: number
@@ -46,6 +81,7 @@ export type Database = {
           description?: string
           featured?: boolean
           id?: number
+          image_path?: string
           link?: string
           period?: string
           sort_order?: number
@@ -65,6 +101,7 @@ export type Database = {
           linkedin: string
           location: string
           name: string
+          photo_path: string
           role: string
           tagline: string
           updated_at: string
@@ -77,6 +114,7 @@ export type Database = {
           linkedin?: string
           location: string
           name: string
+          photo_path?: string
           role: string
           tagline: string
           updated_at?: string
@@ -89,9 +127,37 @@ export type Database = {
           linkedin?: string
           location?: string
           name?: string
+          photo_path?: string
           role?: string
           tagline?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_path: string
+          created_at: string
+          display_name: string
+          preferences: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_path?: string
+          created_at?: string
+          display_name?: string
+          preferences?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_path?: string
+          created_at?: string
+          display_name?: string
+          preferences?: Json
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
