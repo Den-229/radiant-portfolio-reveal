@@ -11,6 +11,7 @@ export type PortfolioProfile = {
   linkedin: string;
   github: string;
   availability: string;
+  photo_path: string;
 };
 
 export type PortfolioEntry = {
@@ -23,6 +24,7 @@ export type PortfolioEntry = {
   link: string;
   featured: boolean;
   sort_order: number;
+  image_path: string;
 };
 
 export const fallbackPortfolio: { profile: PortfolioProfile; entries: PortfolioEntry[] } = {
@@ -37,6 +39,7 @@ export const fallbackPortfolio: { profile: PortfolioProfile; entries: PortfolioE
     linkedin: "https://www.linkedin.com",
     github: "",
     availability: "Disponible pour de nouveaux projets",
+    photo_path: "",
   },
   entries: [],
 };
@@ -51,8 +54,24 @@ export const portfolioQuery = queryOptions({
     if (profileResult.error) throw profileResult.error;
     if (entriesResult.error) throw entriesResult.error;
     return {
-      profile: profileResult.data as PortfolioProfile,
-      entries: entriesResult.data as PortfolioEntry[],
+      profile: await withSignedPhoto(profileResult.data as PortfolioProfile),
+      entries: await Promise.all((entriesResult.data as PortfolioEntry[]).map(withSignedImage)),
     };
   },
 });
+
+async function signedMediaUrl(path: string) {
+  if (!path) return "";
+  const { data } = await supabase.storage.from("portfolio-media").createSignedUrl(path, 3600);
+  return data?.signedUrl ?? "";
+}
+
+async function withSignedPhoto(profile: PortfolioProfile) {
+  const signed = await signedMediaUrl(profile.photo_path);
+  return { ...profile, photo_path: signed || profile.photo_path };
+}
+
+async function withSignedImage(entry: PortfolioEntry) {
+  const signed = await signedMediaUrl(entry.image_path);
+  return { ...entry, image_path: signed || entry.image_path };
+}
