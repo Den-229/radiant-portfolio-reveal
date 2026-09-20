@@ -1,0 +1,1 @@
+CREATE POLICY "Public can view portfolio media" ON storage.objects FOR SELECT TO anon USING (bucket_id = 'portfolio-media');
