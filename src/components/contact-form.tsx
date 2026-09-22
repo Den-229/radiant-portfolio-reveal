@@ -40,10 +40,10 @@ export function ContactForm() {
       <label>Email<Input name="email" type="email" inputMode="email" autoComplete="email" required placeholder="vous@email.com" /></label>
     </div>
     <label>Sujet<Input name="subject" placeholder="Votre projet" /></label>
-    <label>Message<Textarea name="message" required rows={5} placeholder="Parlez-moi de votre idée…" /></label>
+    <label>Message<Textarea name="message" required minLength={10} rows={5} placeholder="Parlez-moi de votre idée…" /></label>
     <div className="contact-form-action">
       <Button type="submit" variant="ink" disabled={state === "sending"}>{state === "sending" ? "Envoi…" : <>Envoyer <Send /></>}</Button>
-      <p role="status">{state === "sent" ? "Message bien reçu. Je vous répondrai rapidement." : state === "error" ? "Vérifiez les champs, puis réessayez." : ""}</p>
+      <p role="status">{message}</p>
     </div>
   </form>;
 }
