@@ -1,7 +1,8 @@
 # Roadmap
 
 - [x] Refaire le portfolio public selon la référence choisie.
-- [ ] Relier le formulaire de contact à un envoi réel par email.
 - [x] Créer la connexion et le tableau de bord administrateur.
 - [x] Permettre la modification des projets, de la bio, du contact et de la photo.
-- [ ] Optimiser et vérifier les interactions sur mobile.
+- [x] Enregistrer les messages du formulaire et les afficher dans l'administration.
+- [x] Optimiser et vérifier les interactions sur mobile.
+- [ ] Recevoir les messages par email (en attente d'un nom de domaine appartenant à Denis).
