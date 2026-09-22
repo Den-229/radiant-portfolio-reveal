@@ -7,27 +7,30 @@ import { Textarea } from "@/components/ui/textarea";
 
 export function ContactForm() {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [message, setMessage] = useState("");
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setState("sending");
-    const form = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const data = new FormData(form);
     const payload = {
-      name: String(form.get("name") ?? "").trim(),
-      email: String(form.get("email") ?? "").trim(),
-      subject: String(form.get("subject") ?? "").trim(),
-      message: String(form.get("message") ?? "").trim(),
+      name: String(data.get("name") ?? "").trim(),
+      email: String(data.get("email") ?? "").trim(),
+      subject: String(data.get("subject") ?? "").trim().slice(0, 150),
+      message: String(data.get("message") ?? "").trim(),
     };
-    if (!payload.name || !payload.email || !payload.message) {
-      setState("error");
-      return;
-    }
+    if (payload.name.length < 2) { setMessage("Indiquez votre nom (2 caractères minimum)."); setState("error"); return; }
+    if (payload.email.length < 3) { setMessage("Indiquez une adresse email valide."); setState("error"); return; }
+    if (payload.message.length < 10) { setMessage("Votre message doit contenir au moins 10 caractères."); setState("error"); return; }
+    setState("sending");
     const { error } = await supabase.from("contact_messages").insert(payload);
     if (error) {
+      setMessage("L’envoi a échoué. Réessayez dans un instant.");
       setState("error");
       return;
     }
-    event.currentTarget.reset();
+    form.reset();
+    setMessage("Message bien reçu. Je vous répondrai rapidement.");
     setState("sent");
   }
 
