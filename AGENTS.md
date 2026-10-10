@@ -11,3 +11,4 @@
 
 - Keep the retouched default portrait as a bundled transparent image while allowing the saved admin photo to override it, so user uploads remain authoritative.
 - Implement portfolio motion with CSS and intersection-based reveals, respecting reduced-motion settings so animation does not block access to content.
+- Bootstrap the portfolio administrator only from the designated verified email in the database auth lifecycle trigger; route access and content writes must still enforce stored user roles, never trust a browser email check.
