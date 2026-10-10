@@ -11,3 +11,4 @@
 - [x] Ajouter et vérifier des animations sur le portfolio.
 - [x] Réserver l'accès administrateur au Gmail confirmé et permettre sa première connexion Google.
 - [ ] Vérifier la première connexion administrateur réelle (Denis doit se connecter avec son compte Google).
+- [x] Ajouter la création du compte par email avec un mot de passe choisi par Denis et confirmation obligatoire.
