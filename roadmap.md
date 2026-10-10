@@ -6,3 +6,6 @@
 - [x] Enregistrer les messages du formulaire et les afficher dans l'administration.
 - [x] Optimiser et vérifier les interactions sur mobile.
 - [ ] Recevoir les messages par email (en attente d'un nom de domaine appartenant à Denis).
+- [ ] Vérifier l'identifiant administrateur et expliquer l'accès.
+- [ ] Retoucher et détourer le portrait de Denis.
+- [ ] Ajouter et vérifier des animations sur le portfolio.
