@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791620667387,
+      "tag": "0000_designate_verified_gmail_portfolio_admin",
+      "breakpoints": true
+    }
+  ]
+}

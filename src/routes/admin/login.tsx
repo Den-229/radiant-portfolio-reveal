@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,33 @@ function AdminLogin() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
+  async function enterAdmin() {
+    const { data: auth } = await supabase.auth.getUser();
+    if (!auth.user) return;
+    const { data: role, error: roleError } = await supabase.from("user_roles").select("role").eq("user_id", auth.user.id).eq("role", "admin").maybeSingle();
+    if (roleError || !role) {
+      setError("Ce compte n’a pas accès à l’administration. Utilisez votre compte Google administrateur.");
+      await supabase.auth.signOut();
+      return;
+    }
+    await navigate({ to: "/admin" });
+  }
+
+  useEffect(() => { void enterAdmin(); }, []);
+
+  async function googleLogin() {
+    setBusy(true); setError("");
+    try {
+      const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: `${window.location.origin}/admin/login` });
+      if (result.error) { setError("La connexion Google n’a pas abouti. Réessayez."); return; }
+      await enterAdmin();
+    } catch {
+      setError("La connexion Google est momentanément indisponible.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true); setError("");
@@ -30,7 +57,7 @@ function AdminLogin() {
     const { error: authError } = await supabase.auth.signInWithPassword({ email: String(form.get("email") ?? ""), password: String(form.get("password") ?? "") });
     setBusy(false);
     if (authError) { setError("Email ou mot de passe incorrect."); return; }
-    await navigate({ to: "/admin" });
+    await enterAdmin();
   }
 
   return <main className="admin-auth"><section>
@@ -38,6 +65,6 @@ function AdminLogin() {
     <p className="eyebrow">Espace privé</p><h1>Gérer mon <span>portfolio</span></h1>
     <form onSubmit={submit}><label>Email<Input name="email" type="email" required autoComplete="email" /></label><label>Mot de passe<Input name="password" type="password" required autoComplete="current-password" /></label><Button variant="ink" disabled={busy}>{busy ? "Connexion…" : <>Se connecter <LogIn /></>}</Button>{error && <p role="alert">{error}</p>}</form>
     <div className="auth-divider"><span>ou</span></div>
-    <Button variant="outline" onClick={() => lovable.auth.signInWithOAuth("google", { redirect_uri: `${window.location.origin}/admin/login` })}>Continuer avec Google</Button>
+    <Button variant="outline" disabled={busy} onClick={googleLogin}>Continuer avec Google</Button>
   </section></main>;
 }

@@ -9,4 +9,4 @@
 - [x] Vérifier l'identifiant administrateur et expliquer l'accès (aucun compte existant).
 - [x] Retoucher et détourer le portrait de Denis.
 - [x] Ajouter et vérifier des animations sur le portfolio.
-- [ ] Activer l'accès administrateur personnel (en attente de confirmation de l'adresse Gmail à utiliser).
+- [ ] Réserver l'accès administrateur au Gmail confirmé et permettre sa première connexion Google.
