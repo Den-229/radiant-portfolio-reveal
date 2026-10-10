@@ -17,7 +17,7 @@ import { portfolioQuery, fallbackPortfolio } from "@/lib/portfolio";
 import projectBmb from "@/assets/project-bmb.jpg";
 import projectSchool from "@/assets/project-school.jpg";
 import stockAsset from "@/assets/project-stock-reference.jpg.asset.json";
-import portraitAsset from "@/assets/denis-portrait.jpg.asset.json";
+import portraitCutout from "@/assets/denis-portrait-cutout.png";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
@@ -71,7 +71,7 @@ function PortfolioPage() {
   const experiences = entries.filter((item) => item.type === "experience");
   const education = entries.filter((item) => item.type === "education");
   const testimonials = entries.filter((item) => item.type === "testimonial");
-  const portrait = profile.photo_path || portraitAsset.url;
+  const portrait = profile.photo_path || portraitCutout;
 
   return <main className="portfolio-page">
     <header className="site-header">
@@ -93,8 +93,8 @@ function PortfolioPage() {
       </div>
       <div className="hero-visual">
         <div className="portrait-lines" aria-hidden="true" />
-        <div className="glow-sphere sphere-one" aria-hidden="true" />
-        <div className="glow-sphere sphere-two" aria-hidden="true" />
+         <div className="portrait-symbol symbol-one" aria-hidden="true"><Code2 /></div>
+         <div className="portrait-symbol symbol-two" aria-hidden="true"><Database /></div>
          <img src={portrait} alt={`Portrait de ${profile.name}`} width={748} height={1600} />
       </div>
     </section>
