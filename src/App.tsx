@@ -133,7 +133,10 @@ export default function App() {
         <ResumeSection lang={lang} />
 
         {/* 10. Testimonials Section (#testimony-section) */}
-        <TestimonialsSection lang={lang} />
+        <TestimonialsSection
+          lang={lang}
+          testimonials={storeData.testimonials}
+        />
 
         {/* 11. Blog Section (#blog-section) */}
         <BlogSection

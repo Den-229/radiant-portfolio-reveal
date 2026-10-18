@@ -19,7 +19,9 @@ import {
   Eye,
   KeyRound,
   Download,
-  RotateCcw
+  RotateCcw,
+  Quote,
+  Star
 } from 'lucide-react';
 import { 
   getInitialStoreData, 
@@ -29,7 +31,7 @@ import {
   ContactMessage 
 } from '@/lib/storage';
 import { auth } from '@/lib/auth';
-import { Project, BlogPost } from '@/data/portfolioData';
+import { Project, BlogPost, Testimonial } from '@/data/portfolioData';
 
 interface AdminDashboardProps {
   onBackToPortfolio: () => void;
@@ -38,7 +40,7 @@ interface AdminDashboardProps {
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToPortfolio, onLogout }) => {
   const [data, setData] = useState<PortfolioStoreData>(getInitialStoreData());
-  const [activeTab, setActiveTab] = useState<'profile' | 'projects' | 'services' | 'blog' | 'messages' | 'settings'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'projects' | 'services' | 'blog' | 'testimonials' | 'messages' | 'settings'>('profile');
   const [notice, setNotice] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // Project editing state
@@ -48,6 +50,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToPortfoli
   // Blog editing state
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [isNewPost, setIsNewPost] = useState(false);
+
+  // Testimonial editing state
+  const [editingTestimonial, setEditingTestimonial] = useState<Testimonial | null>(null);
+  const [isNewTestimonial, setIsNewTestimonial] = useState(false);
 
   // Security password state
   const [newPassword, setNewPassword] = useState('');
@@ -195,6 +201,70 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToPortfoli
     showNotice('Message supprimé.');
   };
 
+  // Testimonials CRUD
+  const handleOpenAddTestimonial = () => {
+    const newTest: Testimonial = {
+      id: `test-${Date.now()}`,
+      name: '',
+      role: '',
+      company: '',
+      rating: 5,
+      content: {
+        fr: '',
+        en: '',
+      },
+    };
+    setEditingTestimonial(newTest);
+    setIsNewTestimonial(true);
+  };
+
+  const handleSaveTestimonial = () => {
+    if (!editingTestimonial) return;
+    if (!editingTestimonial.name.trim()) {
+      showNotice('Veuillez renseigner le nom du client.', 'error');
+      return;
+    }
+    const frText = editingTestimonial.content?.fr?.trim() || '';
+    const enText = editingTestimonial.content?.en?.trim() || '';
+    if (!frText && !enText) {
+      showNotice('Veuillez renseigner le texte du témoignage.', 'error');
+      return;
+    }
+
+    const preparedTestimonial: Testimonial = {
+      ...editingTestimonial,
+      name: editingTestimonial.name.trim(),
+      role: editingTestimonial.role.trim() || 'Client',
+      company: editingTestimonial.company.trim(),
+      rating: Math.max(1, Math.min(5, editingTestimonial.rating || 5)),
+      content: {
+        fr: frText || enText,
+        en: enText || frText,
+      },
+    };
+
+    let updatedList = [...(data.testimonials || [])];
+    if (isNewTestimonial) {
+      updatedList = [preparedTestimonial, ...updatedList];
+    } else {
+      updatedList = updatedList.map((t) => (t.id === preparedTestimonial.id ? preparedTestimonial : t));
+    }
+
+    const updated = { ...data, testimonials: updatedList };
+    setData(updated);
+    saveStoreData(updated);
+    setEditingTestimonial(null);
+    showNotice(isNewTestimonial ? 'Nouveau témoignage ajouté au portfolio !' : 'Témoignage mis à jour !');
+  };
+
+  const handleDeleteTestimonial = (id: string) => {
+    const updatedList = (data.testimonials || []).filter((t) => t.id !== id);
+    const updated = { ...data, testimonials: updatedList };
+    setData(updated);
+    saveStoreData(updated);
+    showNotice('Témoignage supprimé du portfolio.');
+  };
+
   // Password update
   const handleUpdatePassword = (e: React.FormEvent) => {
     e.preventDefault();
@@ -311,6 +381,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToPortfoli
               </span>
             </div>
             <div className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-center">
+              <span className="text-xl font-bold text-amber-400">{(data.testimonials || []).length}</span>
+              <span className="text-[11px] text-slate-400 block font-medium">Témoignages</span>
+            </div>
+            <div className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-center">
               <span className="text-xl font-bold text-indigo-400">{data.blogPosts.length}</span>
               <span className="text-[11px] text-slate-400 block font-medium">Articles</span>
             </div>
@@ -323,6 +397,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToPortfoli
             { id: 'profile', label: 'Profil & Bio', icon: User },
             { id: 'projects', label: `Projets (${data.projects.length})`, icon: Briefcase },
             { id: 'services', label: 'Compétences & Services', icon: Layers },
+            { id: 'testimonials', label: `Témoignages (${(data.testimonials || []).length})`, icon: Quote },
             { id: 'blog', label: `Blog (${data.blogPosts.length})`, icon: BookOpen },
             { id: 'messages', label: `Messages (${data.messages.length})`, icon: Mail, badge: unreadMessagesCount },
             { id: 'settings', label: 'Sécurité & Sauvegarde', icon: Settings },
@@ -887,6 +962,316 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToPortfoli
                       className="px-5 py-2 rounded-lg bg-sky-500 text-slate-950 font-bold text-xs uppercase"
                     >
                       Sauvegarder l’article
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Tab: Testimonials Management */}
+        {activeTab === 'testimonials' && (
+          <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <Quote className="w-5 h-5 text-amber-400" />
+                  <span>Témoignages & Avis Clients</span>
+                </h2>
+                <p className="text-xs text-slate-400 mt-1">
+                  Gérez les retours d’expérience et recommandations affichés sur votre portfolio.
+                </p>
+              </div>
+
+              <button
+                onClick={handleOpenAddTestimonial}
+                className="px-4 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-md shrink-0"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Ajouter un témoignage</span>
+              </button>
+            </div>
+
+            {/* Testimonials List */}
+            {(!data.testimonials || data.testimonials.length === 0) ? (
+              <div className="p-12 text-center bg-[#111827] border border-slate-800 rounded-2xl">
+                <Quote className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+                <h3 className="text-base font-bold text-white">Aucun témoignage enregistré</h3>
+                <p className="text-xs text-slate-400 mt-1 mb-4">
+                  Ajoutez votre premier retour client pour inspirer confiance à vos futurs partenaires.
+                </p>
+                <button
+                  onClick={handleOpenAddTestimonial}
+                  className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs uppercase"
+                >
+                  Ajouter un témoignage
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {data.testimonials.map((test) => (
+                  <div
+                    key={test.id}
+                    className="bg-[#111827] border border-slate-800 hover:border-slate-700 transition-colors rounded-2xl p-6 flex flex-col justify-between shadow-md"
+                  >
+                    <div>
+                      {/* Top rating & actions */}
+                      <div className="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800/80">
+                        <div className="flex items-center gap-1">
+                          {[...Array(Math.max(1, Math.min(5, test.rating || 5)))].map((_, i) => (
+                            <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                          ))}
+                          <span className="text-[11px] font-bold text-amber-400/90 ml-1">
+                            {test.rating || 5}/5
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => {
+                              setEditingTestimonial(test);
+                              setIsNewTestimonial(false);
+                            }}
+                            className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                            title="Modifier ce témoignage"
+                          >
+                            <Edit3 className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteTestimonial(test.id)}
+                            className="p-1.5 rounded-lg bg-red-950/50 hover:bg-red-900/60 text-red-400 transition-colors"
+                            title="Supprimer ce témoignage"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* French Quote */}
+                      <div className="space-y-2 mb-4">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-sky-400 bg-sky-950/60 px-2 py-0.5 rounded">
+                          Français
+                        </span>
+                        <p className="text-xs sm:text-sm text-slate-300 italic leading-relaxed bg-slate-900/50 p-3 rounded-xl border border-slate-800/70">
+                          &ldquo;{test.content?.fr || test.content?.en || ''}&rdquo;
+                        </p>
+                      </div>
+
+                      {/* English Quote (if different) */}
+                      {Boolean(test.content?.en && test.content.en !== test.content.fr) && (
+                        <div className="space-y-1 mb-4">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-800/60 px-2 py-0.5 rounded">
+                            English
+                          </span>
+                          <p className="text-xs text-slate-400 italic leading-relaxed p-2.5 rounded-xl bg-slate-950/40 border border-slate-800/50">
+                            &ldquo;{test.content.en}&rdquo;
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Author details */}
+                    <div className="pt-4 border-t border-slate-800/80 flex items-center gap-3 mt-2">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-sky-600 to-blue-500 flex items-center justify-center font-bold text-white text-sm shrink-0 shadow">
+                        {(test.name || 'C').trim().charAt(0).toUpperCase()}
+                      </div>
+                      <div className="overflow-hidden">
+                        <h4 className="text-sm font-bold text-white truncate">
+                          {test.name}
+                        </h4>
+                        <p className="text-xs text-slate-400 truncate">
+                          {test.role} {test.company ? `· ${test.company}` : ''}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Testimonial Editor Modal */}
+            {editingTestimonial && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                <div className="bg-[#111827] border border-slate-700 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-5 shadow-2xl">
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                    <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                      <Quote className="w-5 h-5 text-sky-400" />
+                      <span>{isNewTestimonial ? 'Nouveau Témoignage' : 'Modifier le Témoignage'}</span>
+                    </h3>
+                    <button
+                      onClick={() => setEditingTestimonial(null)}
+                      className="text-slate-400 hover:text-white text-sm"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  {/* Client Name */}
+                  <div>
+                    <label className="block text-xs font-bold uppercase text-slate-400 mb-1.5">
+                      Nom complet du client / signataire *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Ex: Paul Agbossou, Directeur Général"
+                      value={editingTestimonial.name}
+                      onChange={(e) =>
+                        setEditingTestimonial({ ...editingTestimonial, name: e.target.value })
+                      }
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-sm focus:border-sky-500 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Role & Company */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-400 mb-1.5">
+                        Poste / Fonction
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ex: Administration Scolaire"
+                        value={editingTestimonial.role}
+                        onChange={(e) =>
+                          setEditingTestimonial({ ...editingTestimonial, role: e.target.value })
+                        }
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-sm focus:border-sky-500 focus:outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-400 mb-1.5">
+                        Entreprise / Institution
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ex: Complexe Scolaire Privé"
+                        value={editingTestimonial.company}
+                        onChange={(e) =>
+                          setEditingTestimonial({ ...editingTestimonial, company: e.target.value })
+                        }
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-sm focus:border-sky-500 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Rating selection (Interactive stars) */}
+                  <div>
+                    <label className="block text-xs font-bold uppercase text-slate-400 mb-2">
+                      Note attribuée (1 à 5 étoiles)
+                    </label>
+                    <div className="flex items-center gap-2 bg-slate-900 p-3 rounded-xl border border-slate-800">
+                      <div className="flex items-center gap-1">
+                        {[1, 2, 3, 4, 5].map((starValue) => {
+                          const isFilled = (editingTestimonial.rating || 5) >= starValue;
+                          return (
+                            <button
+                              key={starValue}
+                              type="button"
+                              onClick={() =>
+                                setEditingTestimonial({ ...editingTestimonial, rating: starValue })
+                              }
+                              className="p-1 hover:scale-110 transition-transform"
+                              title={`Attribuer ${starValue} étoile(s)`}
+                            >
+                              <Star
+                                className={`w-6 h-6 transition-colors ${
+                                  isFilled
+                                    ? 'fill-amber-400 text-amber-400'
+                                    : 'text-slate-600 hover:text-amber-300'
+                                }`}
+                              />
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <span className="text-xs font-bold text-amber-400 ml-2">
+                        {editingTestimonial.rating || 5} / 5 étoiles
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* French Content */}
+                  <div>
+                    <label className="block text-xs font-bold uppercase text-slate-400 mb-1.5">
+                      Texte du Témoignage (Français) *
+                    </label>
+                    <textarea
+                      rows={4}
+                      required
+                      placeholder="Ex: Denis a conçu pour notre établissement un système de gestion des notes et bulletins d'une efficacité redoutable..."
+                      value={editingTestimonial.content?.fr || ''}
+                      onChange={(e) =>
+                        setEditingTestimonial({
+                          ...editingTestimonial,
+                          content: {
+                            ...editingTestimonial.content,
+                            fr: e.target.value,
+                          },
+                        })
+                      }
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-sm focus:border-sky-500 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* English Content */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-bold uppercase text-slate-400">
+                        Texte du Témoignage (Anglais - Optionnel)
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (editingTestimonial.content?.fr) {
+                            setEditingTestimonial({
+                              ...editingTestimonial,
+                              content: {
+                                ...editingTestimonial.content,
+                                en: editingTestimonial.content.fr,
+                              },
+                            });
+                          }
+                        }}
+                        className="text-[11px] text-sky-400 hover:text-sky-300 underline"
+                      >
+                        Copier depuis le français
+                      </button>
+                    </div>
+                    <textarea
+                      rows={3}
+                      placeholder="Ex: Denis engineered a grade computation and report card platform that revolutionized our school operations..."
+                      value={editingTestimonial.content?.en || ''}
+                      onChange={(e) =>
+                        setEditingTestimonial({
+                          ...editingTestimonial,
+                          content: {
+                            ...editingTestimonial.content,
+                            en: e.target.value,
+                          },
+                        })
+                      }
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-sm focus:border-sky-500 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Modal Action Buttons */}
+                  <div className="pt-4 border-t border-slate-800 flex justify-end items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setEditingTestimonial(null)}
+                      className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300"
+                    >
+                      Annuler
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSaveTestimonial}
+                      className="px-5 py-2 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-md"
+                    >
+                      Enregistrer le témoignage
                     </button>
                   </div>
                 </div>
