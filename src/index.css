@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Plus Jakarta Sans", "Inter", sans-serif;
+  
+  --color-brand-primary: #0284c7;
+  --color-brand-accent: #b1b493;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #0b1120;
+  color: #f1f5f9;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Clyde Signature Heading Section */
+.heading-section {
+  position: relative;
+}
+
+.heading-section .subheading {
+  font-size: 13px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #38bdf8; /* Clyde accent sky blue */
+}
+
+.heading-section h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+/* Clyde Section Counter styling */
+.counter-box {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.counter-box:hover {
+  transform: translateY(-4px);
+  border-color: #38bdf8;
+}
+
+/* Clyde Hire Me Banner */
+.hireme-banner {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-top: 1px solid #334155;
+  border-bottom: 1px solid #334155;
+}
+
+/* Clean Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #0b1120;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0284c7;
+}
+
+/* Smooth typing cursor animation */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background-color: #38bdf8;
+  vertical-align: middle;
+  margin-left: 4px;
+  animation: blink 0.8s infinite;
+}
