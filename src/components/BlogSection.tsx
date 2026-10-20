@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, User, Clock, ArrowRight, MessageSquare, BookOpen } from 'lucide-react';
+import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import { PORTFOLIO_DATA, BlogPost } from '@/data/portfolioData';
 import { BlogModal } from '@/components/BlogModal';
 
@@ -12,14 +12,14 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ lang, posts = PORTFOLI
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
   return (
-    <section id="blog-section" className="py-24 bg-[#0e1628] border-b border-slate-800">
+    <section id="blog-section" className="py-24 bg-slate-50 dark:bg-[#0e1628] border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Clyde Heading Section */}
         <div className="heading-section text-center mb-16">
           <span className="subheading">{lang === 'fr' ? 'Articles & Veille' : 'Blog'}</span>
           <h2>{lang === 'fr' ? 'Mon Blog & Partages Techniques' : 'Our Blog'}</h2>
-          <p className="mt-3 text-slate-400 text-sm max-w-xl mx-auto">
+          <p className="mt-3 text-slate-600 dark:text-slate-400 text-sm max-w-xl mx-auto">
             {lang === 'fr'
               ? 'Retours d’expérience, analyses architecturales et bonnes pratiques de développement logiciel.'
               : 'Technical insights, real-world development experiences, and modern engineering practices.'}
@@ -31,11 +31,11 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ lang, posts = PORTFOLI
           {posts.map((post) => (
             <article
               key={post.id}
-              className="bg-[#111827] rounded-xl border border-slate-800 hover:border-slate-700 transition-all duration-300 overflow-hidden flex flex-col justify-between group shadow-lg"
+              className="bg-white dark:bg-[#111827] rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 overflow-hidden flex flex-col justify-between group shadow-md dark:shadow-lg"
             >
               {/* Image banner */}
               <div 
-                className="relative aspect-[16/10] overflow-hidden bg-slate-950 cursor-pointer"
+                className="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-950 cursor-pointer"
                 onClick={() => setSelectedPost(post)}
               >
                 <img
@@ -45,7 +45,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ lang, posts = PORTFOLI
                   loading="lazy"
                 />
                 <div className="absolute top-3 left-3">
-                  <span className="px-2.5 py-1 rounded bg-slate-900/90 text-sky-400 text-[11px] font-semibold border border-slate-700 backdrop-blur-sm">
+                  <span className="px-2.5 py-1 rounded bg-white/95 dark:bg-slate-900/90 text-sky-700 dark:text-sky-400 text-[11px] font-semibold border border-slate-200 dark:border-slate-700 backdrop-blur-sm shadow-xs">
                     {post.category}
                   </span>
                 </div>
@@ -55,14 +55,14 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ lang, posts = PORTFOLI
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
                   {/* Meta info */}
-                  <div className="flex items-center gap-3 text-xs text-slate-400 mb-2.5 font-medium">
+                  <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-2.5 font-medium">
                     <div className="flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5 text-sky-400" />
+                      <Calendar className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
                       <span>{post.date}</span>
                     </div>
                     <span>•</span>
                     <div className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5 text-sky-400" />
+                      <Clock className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
                       <span>{post.readTime}</span>
                     </div>
                   </div>
@@ -70,22 +70,22 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ lang, posts = PORTFOLI
                   {/* Title */}
                   <h3
                     onClick={() => setSelectedPost(post)}
-                    className="text-base sm:text-lg font-bold text-white group-hover:text-sky-400 transition-colors cursor-pointer leading-snug"
+                    className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-sky-600 dark:text-white dark:group-hover:text-sky-400 transition-colors cursor-pointer leading-snug"
                   >
                     {post.title[lang]}
                   </h3>
 
                   {/* Excerpt */}
-                  <p className="mt-2.5 text-xs sm:text-sm text-slate-400 line-clamp-3 leading-relaxed">
+                  <p className="mt-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
                     {post.excerpt[lang]}
                   </p>
                 </div>
 
                 {/* Footer Read More Button */}
-                <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+                <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                   <button
                     onClick={() => setSelectedPost(post)}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-sky-400 hover:text-sky-300 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors"
                   >
                     <span>{lang === 'fr' ? "Lire l'article" : 'Read More'}</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

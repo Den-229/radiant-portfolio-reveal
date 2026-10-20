@@ -62,7 +62,7 @@ export const Hero: React.FC<HeroProps> = ({ lang, onOpenCv, profile = PORTFOLIO_
   }, [displayText, isDeleting, titleIndex, titles]);
 
   return (
-    <section id="home-section" className="relative min-h-[92vh] pt-32 pb-20 flex items-center bg-[#0b1120] border-b border-slate-800">
+    <section id="home-section" className="relative min-h-[92vh] pt-32 pb-20 flex items-center bg-slate-50 dark:bg-[#0b1120] border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
@@ -71,53 +71,53 @@ export const Hero: React.FC<HeroProps> = ({ lang, onOpenCv, profile = PORTFOLIO_
             
             {/* Clyde HELLO! Subheading */}
             <div className="flex items-center gap-3">
-              <span className="text-xs font-bold uppercase tracking-[4px] text-sky-400">
+              <span className="text-xs font-bold uppercase tracking-[4px] text-sky-600 dark:text-sky-400">
                 HELLO!
               </span>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/70 border border-emerald-800/60 text-emerald-400 text-[11px] font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/70 border border-emerald-300 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-400 text-[11px] font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
                 <span>{profile.remoteStatus[lang]}</span>
               </div>
             </div>
 
             {/* Name & Headline */}
             <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-heading text-white tracking-tight">
-                {lang === 'fr' ? 'Je suis ' : "I'm "}<span className="text-white">{profile.name}</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-heading text-slate-900 dark:text-white tracking-tight">
+                {lang === 'fr' ? 'Je suis ' : "I'm "}<span className="text-slate-900 dark:text-white">{profile.name}</span>
               </h1>
 
-              {/* Typewriter text line (Clyde / DevFolio style) */}
-              <div className="h-9 mt-2 flex items-center text-lg sm:text-2xl font-semibold text-sky-400">
+              {/* Typewriter text line */}
+              <div className="h-9 mt-2 flex items-center text-lg sm:text-2xl font-semibold text-sky-600 dark:text-sky-400">
                 <span>{displayText}</span>
                 <span className="typing-cursor" />
               </div>
             </div>
 
             {/* Authentic bio paragraph */}
-            <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl font-normal">
+            <p className="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl font-normal">
               {profile.tagline[lang]}
             </p>
 
             {/* Quick meta (Location & Email) */}
-            <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-400 font-medium">
+            <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
               <div className="flex items-center gap-1.5">
-                <MapPin className="w-4 h-4 text-sky-400" />
+                <MapPin className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                 <span>{profile.location} (GMT+1)</span>
               </div>
-              <span className="text-slate-700">•</span>
+              <span className="text-slate-300 dark:text-slate-700">•</span>
               <div className="flex items-center gap-1.5">
-                <Mail className="w-4 h-4 text-sky-400" />
+                <Mail className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                 <span>{profile.email}</span>
               </div>
             </div>
 
-            {/* CTA Buttons in Clyde style: HIRE ME & MY WORKS */}
+            {/* CTA Buttons */}
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <a
                 href={profile.whatsapp}
                 target="_blank"
                 rel="noreferrer"
-                className="px-7 py-3.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-2"
+                className="px-7 py-3.5 rounded-lg bg-sky-600 hover:bg-sky-500 dark:bg-sky-500 dark:hover:bg-sky-400 text-white dark:text-slate-950 font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-2"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>{lang === 'fr' ? 'Me recruter / HIRE ME' : 'Hire Me'}</span>
@@ -125,7 +125,7 @@ export const Hero: React.FC<HeroProps> = ({ lang, onOpenCv, profile = PORTFOLIO_
 
               <a
                 href="#projects-section"
-                className="px-6 py-3.5 rounded-lg border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-semibold text-xs uppercase tracking-wider transition-all flex items-center gap-2"
+                className="px-6 py-3.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white hover:bg-slate-100 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-xs uppercase tracking-wider transition-all flex items-center gap-2 shadow-xs"
               >
                 <span>{lang === 'fr' ? 'Mes projets' : 'My Works'}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -133,16 +133,16 @@ export const Hero: React.FC<HeroProps> = ({ lang, onOpenCv, profile = PORTFOLIO_
 
               <button
                 onClick={onOpenCv}
-                className="px-5 py-3.5 rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-300 hover:text-white font-semibold text-xs uppercase tracking-wider transition-all flex items-center gap-1.5"
+                className="px-5 py-3.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white hover:bg-slate-100 dark:bg-transparent dark:hover:bg-slate-800 text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white font-semibold text-xs uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-xs"
               >
-                <Download className="w-4 h-4 text-sky-400" />
+                <Download className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                 <span>CV</span>
               </button>
             </div>
 
             {/* Social links row */}
             <div className="pt-4 flex items-center gap-3">
-              <span className="text-xs uppercase tracking-wider text-slate-500 font-semibold">
+              <span className="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
                 {lang === 'fr' ? 'Suivez-moi :' : 'Follow me :'}
               </span>
 
@@ -150,7 +150,7 @@ export const Hero: React.FC<HeroProps> = ({ lang, onOpenCv, profile = PORTFOLIO_
                 href={profile.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-400 hover:text-white hover:border-blue-500 transition-colors"
+                className="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-white hover:border-sky-500 transition-colors shadow-xs"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-4 h-4" />
@@ -160,7 +160,7 @@ export const Hero: React.FC<HeroProps> = ({ lang, onOpenCv, profile = PORTFOLIO_
                 href={profile.github}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-400 hover:text-white hover:border-slate-500 transition-colors"
+                className="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white hover:border-slate-400 dark:hover:border-slate-500 transition-colors shadow-xs"
                 aria-label="GitHub"
               >
                 <Github className="w-4 h-4" />
@@ -170,7 +170,7 @@ export const Hero: React.FC<HeroProps> = ({ lang, onOpenCv, profile = PORTFOLIO_
                 href={profile.whatsapp}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-400 hover:text-emerald-400 hover:border-emerald-500 transition-colors"
+                className="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500 transition-colors shadow-xs"
                 aria-label="WhatsApp"
               >
                 <MessageSquare className="w-4 h-4" />
@@ -179,13 +179,13 @@ export const Hero: React.FC<HeroProps> = ({ lang, onOpenCv, profile = PORTFOLIO_
 
           </div>
 
-          {/* Right Column: Clean Portrait in ThemeWagon frame (5 cols) */}
+          {/* Right Column: Clean Portrait */}
           <div className="lg:col-span-5 flex justify-center">
             <div className="relative w-full max-w-sm">
               
               {/* Outer clean frame */}
-              <div className="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-700 shadow-2xl p-2">
-                <div className="rounded-xl overflow-hidden bg-slate-950 aspect-[4/5] flex items-end justify-center">
+              <div className="relative rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl dark:shadow-2xl p-2">
+                <div className="rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-950 aspect-[4/5] flex items-end justify-center">
                   <img
                     src={profile.portrait}
                     alt={profile.name}
@@ -195,14 +195,14 @@ export const Hero: React.FC<HeroProps> = ({ lang, onOpenCv, profile = PORTFOLIO_
               </div>
 
               {/* Clean floating info badge */}
-              <div className="mt-4 p-3.5 rounded-xl bg-slate-900 border border-slate-700 shadow-lg flex items-center justify-between text-xs">
+              <div className="mt-4 p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-md flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span className="font-semibold text-slate-200">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">
                     {lang === 'fr' ? 'Profil vérifié & disponible' : 'Verified & Available'}
                   </span>
                 </div>
-                <span className="text-slate-400 font-medium">Bénin · Remote</span>
+                <span className="text-slate-500 dark:text-slate-400 font-medium">Bénin · Remote</span>
               </div>
 
             </div>

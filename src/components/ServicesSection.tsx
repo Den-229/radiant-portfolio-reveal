@@ -8,7 +8,6 @@ import {
   Cloud,
   ArrowRight
 } from 'lucide-react';
-import { PORTFOLIO_DATA } from '@/data/portfolioData';
 
 interface ServicesSectionProps {
   lang: 'fr' | 'en';
@@ -86,14 +85,14 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ lang, onSelect
   ];
 
   return (
-    <section id="services-section" className="py-24 bg-[#0b1120] border-b border-slate-800">
+    <section id="services-section" className="py-24 bg-slate-50 dark:bg-[#0b1120] border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Clyde Heading Section */}
         <div className="heading-section text-center mb-16">
           <span className="subheading">{lang === 'fr' ? 'Mes Spécialités' : 'I am great at'}</span>
           <h2>{lang === 'fr' ? 'Des Services Conçus Pour Vos Besoins' : 'We do awesome services for our clients'}</h2>
-          <p className="mt-3 text-slate-400 text-sm max-w-xl mx-auto">
+          <p className="mt-3 text-slate-600 dark:text-slate-400 text-sm max-w-xl mx-auto">
             {lang === 'fr'
               ? 'Un accompagnement de bout en bout pour concevoir, développer et déployer vos solutions digitales.'
               : 'End-to-end technical expertise to architect, develop and ship reliable software systems.'}
@@ -107,33 +106,33 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ lang, onSelect
             return (
               <div
                 key={service.id}
-                className="bg-[#111827] p-8 rounded-xl border border-slate-800 hover:border-slate-700 transition-all duration-300 flex flex-col justify-between group shadow-lg"
+                className="bg-white dark:bg-[#111827] p-8 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 flex flex-col justify-between group shadow-md dark:shadow-lg"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-13 h-13 rounded-xl bg-sky-950 border border-sky-800/60 flex items-center justify-center text-sky-400 group-hover:bg-sky-500 group-hover:text-slate-950 transition-all">
+                    <div className="w-13 h-13 rounded-xl bg-sky-50 dark:bg-sky-950 border border-sky-200 dark:border-sky-800/60 flex items-center justify-center text-sky-600 dark:text-sky-400 group-hover:bg-sky-500 group-hover:text-white dark:group-hover:text-slate-950 transition-all">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="text-xl font-bold text-slate-700">
+                    <span className="text-xl font-bold text-slate-300 dark:text-slate-700">
                       {service.number}
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white group-hover:text-sky-400 transition-colors">
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-sky-600 dark:text-white dark:group-hover:text-sky-400 transition-colors">
                     {service.title[lang]}
                   </h3>
 
-                  <p className="mt-3 text-slate-400 text-xs sm:text-sm leading-relaxed">
+                  <p className="mt-3 text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
                     {service.description[lang]}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-5 border-t border-slate-800/80">
+                <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800/80">
                   <div className="flex flex-wrap gap-1.5 mb-4">
                     {service.tags.map((tag, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px] font-medium"
+                        className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-medium"
                       >
                         {tag}
                       </span>
@@ -142,7 +141,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ lang, onSelect
 
                   <button
                     onClick={() => onSelectService(service.title[lang])}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-sky-400 hover:text-sky-300 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors"
                   >
                     <span>{lang === 'fr' ? 'Demander ce service' : 'Request Service'}</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

@@ -32,6 +32,7 @@ import {
 } from '@/lib/storage';
 import { auth } from '@/lib/auth';
 import { Project, BlogPost, Testimonial } from '@/data/portfolioData';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface AdminDashboardProps {
   onBackToPortfolio: () => void;
@@ -304,33 +305,35 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToPortfoli
   const unreadMessagesCount = data.messages.filter((m) => !m.read).length;
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 font-sans pb-20">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-slate-100 font-sans pb-20 transition-colors duration-200">
       
       {/* Top Admin Navbar */}
-      <header className="sticky top-0 z-40 bg-[#0f172a] border-b border-slate-800 px-4 sm:px-8 py-3.5 shadow-md">
+      <header className="sticky top-0 z-40 bg-white dark:bg-[#0f172a] border-b border-slate-200 dark:border-slate-800 px-4 sm:px-8 py-3.5 shadow-xs dark:shadow-md">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           
           <div className="flex items-center gap-3">
-            <span className="text-xl font-bold font-heading text-white">
-              Denis<span className="text-sky-400">.</span>
+            <span className="text-xl font-bold font-heading text-slate-900 dark:text-white">
+              Denis<span className="text-sky-600 dark:text-sky-400">.</span>
             </span>
-            <span className="px-2 py-0.5 rounded bg-sky-950 text-sky-400 border border-sky-800 text-[11px] font-bold uppercase tracking-wider">
+            <span className="px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950 text-sky-700 dark:text-sky-400 border border-sky-200 dark:border-sky-800 text-[11px] font-bold uppercase tracking-wider">
               Administration
             </span>
           </div>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle variant="compact" />
+
             <button
               onClick={onBackToPortfolio}
-              className="px-3.5 py-1.5 rounded-lg border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors flex items-center gap-1.5 shadow-xs"
             >
-              <Eye className="w-3.5 h-3.5 text-sky-400" />
+              <Eye className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
               <span>Voir le portfolio</span>
             </button>
 
             <button
               onClick={onLogout}
-              className="px-3 py-1.5 rounded-lg bg-red-950/60 hover:bg-red-900/60 border border-red-800/60 text-xs font-semibold text-red-300 transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 dark:bg-red-950/60 dark:hover:bg-red-900/60 border border-red-200 dark:border-red-800/60 text-xs font-semibold text-red-600 dark:text-red-300 transition-colors flex items-center gap-1.5 shadow-xs"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Déconnexion</span>
@@ -348,8 +351,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToPortfoli
           <div
             className={`mb-6 p-4 rounded-xl flex items-center gap-3 text-sm font-semibold shadow-lg ${
               notice.type === 'success'
-                ? 'bg-emerald-950/90 border border-emerald-500/80 text-emerald-300'
-                : 'bg-red-950/90 border border-red-500/80 text-red-300'
+                ? 'bg-emerald-100 dark:bg-emerald-950/90 border border-emerald-300 dark:border-emerald-500/80 text-emerald-800 dark:text-emerald-300'
+                : 'bg-red-100 dark:bg-red-950/90 border border-red-300 dark:border-red-500/80 text-red-800 dark:text-red-300'
             }`}
           >
             <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
@@ -358,41 +361,41 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToPortfoli
         )}
 
         {/* Welcome & Stats Row */}
-        <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800">
+        <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold font-heading text-white">
+            <h1 className="text-2xl sm:text-3xl font-bold font-heading text-slate-900 dark:text-white">
               Tableau de Bord Administrateur
             </h1>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
               Gérez en temps réel vos projets, compétences, services, articles et messages reçus.
             </p>
           </div>
 
           {/* Quick counters */}
           <div className="flex flex-wrap items-center gap-3">
-            <div className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-center">
-              <span className="text-xl font-bold text-sky-400">{data.projects.length}</span>
-              <span className="text-[11px] text-slate-400 block font-medium">Projets</span>
+            <div className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center shadow-xs">
+              <span className="text-xl font-bold text-sky-600 dark:text-sky-400">{data.projects.length}</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Projets</span>
             </div>
-            <div className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-center">
-              <span className="text-xl font-bold text-emerald-400">{data.messages.length}</span>
-              <span className="text-[11px] text-slate-400 block font-medium">
+            <div className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center shadow-xs">
+              <span className="text-xl font-bold text-emerald-600 dark:text-emerald-400">{data.messages.length}</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">
                 Messages {unreadMessagesCount > 0 && `(${unreadMessagesCount} non lus)`}
               </span>
             </div>
-            <div className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-center">
-              <span className="text-xl font-bold text-amber-400">{(data.testimonials || []).length}</span>
-              <span className="text-[11px] text-slate-400 block font-medium">Témoignages</span>
+            <div className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center shadow-xs">
+              <span className="text-xl font-bold text-amber-600 dark:text-amber-400">{(data.testimonials || []).length}</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Témoignages</span>
             </div>
-            <div className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-center">
-              <span className="text-xl font-bold text-indigo-400">{data.blogPosts.length}</span>
-              <span className="text-[11px] text-slate-400 block font-medium">Articles</span>
+            <div className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center shadow-xs">
+              <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">{data.blogPosts.length}</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Articles</span>
             </div>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex flex-wrap gap-2 mb-8 border-b border-slate-800 pb-3">
+        <div className="flex flex-wrap gap-2 mb-8 border-b border-slate-200 dark:border-slate-800 pb-3">
           {[
             { id: 'profile', label: 'Profil & Bio', icon: User },
             { id: 'projects', label: `Projets (${data.projects.length})`, icon: Briefcase },
@@ -410,8 +413,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToPortfoli
                 onClick={() => setActiveTab(tab.id as typeof activeTab)}
                 className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 relative ${
                   isActive
-                    ? 'bg-sky-500 text-slate-950 shadow-md font-bold'
-                    : 'bg-slate-900 hover:bg-slate-800 text-slate-300'
+                    ? 'bg-sky-600 text-white dark:bg-sky-500 dark:text-slate-950 shadow-md font-bold'
+                    : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 dark:border-transparent dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 shadow-xs'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -425,6 +428,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToPortfoli
             );
           })}
         </div>
+
 
         {/* Tab 1: Profile & Bio */}
         {activeTab === 'profile' && (

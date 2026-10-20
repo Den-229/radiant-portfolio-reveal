@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));
+
 @theme {
   --font-heading: "Poppins", sans-serif;
   --font-body: "Plus Jakarta Sans", "Inter", sans-serif;
@@ -9,13 +11,44 @@
 }
 
 :root {
+  color-scheme: light;
+  --bg-page: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-muted: #f1f5f9;
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --heading-color: #0f172a;
+  --counter-bg: #ffffff;
+  --counter-border: #e2e8f0;
+  --banner-bg: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+  --banner-border: #0284c7;
+  --banner-text: #ffffff;
+}
+
+.dark, [data-theme="dark"] {
   color-scheme: dark;
+  --bg-page: #0b1120;
+  --bg-surface: #111827;
+  --bg-surface-muted: #0e1628;
+  --border-subtle: #1f2937;
+  --border-strong: #334155;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --heading-color: #ffffff;
+  --counter-bg: #111827;
+  --counter-border: #1f2937;
+  --banner-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  --banner-border: #334155;
+  --banner-text: #ffffff;
 }
 
 body {
   font-family: var(--font-body);
-  background-color: #0b1120;
-  color: #f1f5f9;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -34,36 +67,68 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 3px;
-  color: #38bdf8; /* Clyde accent sky blue */
+  color: #0284c7;
+}
+
+.dark .heading-section .subheading,
+[data-theme="dark"] .heading-section .subheading {
+  color: #38bdf8;
 }
 
 .heading-section h2 {
   font-size: clamp(28px, 4vw, 40px);
   font-weight: 700;
-  color: #ffffff;
+  color: var(--heading-color);
   line-height: 1.25;
+}
+
+/* Section Title Wrap (for ResumeSection, etc.) */
+.section-title-wrap h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  color: var(--heading-color);
+  line-height: 1.25;
+}
+
+.section-title-wrap p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 32px;
 }
 
 /* Clyde Section Counter styling */
 .counter-box {
-  background: #111827;
-  border: 1px solid #1f2937;
+  background: var(--counter-bg);
+  border: 1px solid var(--counter-border);
   border-radius: 12px;
   padding: 30px 20px;
   text-align: center;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.2s ease;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark .counter-box,
+[data-theme="dark"] .counter-box {
+  box-shadow: none;
 }
 
 .counter-box:hover {
   transform: translateY(-4px);
+  border-color: #0284c7;
+}
+
+.dark .counter-box:hover,
+[data-theme="dark"] .counter-box:hover {
   border-color: #38bdf8;
 }
 
 /* Clyde Hire Me Banner */
 .hireme-banner {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  border-top: 1px solid #334155;
-  border-bottom: 1px solid #334155;
+  background: var(--banner-bg);
+  border-top: 1px solid var(--banner-border);
+  border-bottom: 1px solid var(--banner-border);
+  color: var(--banner-text);
 }
 
 /* Clean Custom Scrollbar */
@@ -71,11 +136,15 @@ h1, h2, h3, h4, h5, h6 {
   width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #0b1120;
+  background: var(--bg-page);
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #cbd5e1;
   border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb,
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #334155;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #0284c7;
@@ -91,8 +160,13 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-block;
   width: 2px;
   height: 1.1em;
-  background-color: #38bdf8;
+  background-color: #0284c7;
   vertical-align: middle;
   margin-left: 4px;
   animation: blink 0.8s infinite;
+}
+
+.dark .typing-cursor,
+[data-theme="dark"] .typing-cursor {
+  background-color: #38bdf8;
 }

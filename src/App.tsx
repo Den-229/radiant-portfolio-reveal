@@ -83,9 +83,8 @@ export default function App() {
     );
   }
 
-  // Public Portfolio View (Clyde ThemeWagon template)
   return (
-    <div className="min-h-screen bg-[#0b1120] text-slate-100 selection:bg-sky-500 selection:text-slate-950 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#0b1120] dark:text-slate-100 selection:bg-sky-500 selection:text-slate-950 font-sans transition-colors duration-200">
       {/* 1. Clyde Sticky Navbar */}
       <Navbar
         lang={lang}

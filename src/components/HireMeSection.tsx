@@ -8,13 +8,13 @@ interface HireMeSectionProps {
 
 export const HireMeSection: React.FC<HireMeSectionProps> = ({ lang }) => {
   return (
-    <section className="hireme-banner py-16 sm:py-20 relative overflow-hidden">
+    <section className="hireme-banner py-16 sm:py-20 relative overflow-hidden transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* Left Text & CTA (8 cols) */}
           <div className="lg:col-span-8 space-y-4">
-            <span className="text-xs font-bold uppercase tracking-widest text-sky-400">
+            <span className="text-xs font-bold uppercase tracking-widest text-sky-200 dark:text-sky-400">
               {lang === 'fr' ? 'Disponible pour missions & CDI' : "I'm Available For Freelance Work"}
             </span>
 
@@ -22,7 +22,7 @@ export const HireMeSection: React.FC<HireMeSectionProps> = ({ lang }) => {
               {lang === 'fr' ? 'Vous avez un projet en tête ?' : 'Have a Project On Your Mind?'}
             </h2>
 
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
+            <p className="text-sky-50 dark:text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
               {lang === 'fr'
                 ? 'De l’application mobile Flutter prête pour les stores jusqu’à l’ERP complet sous Laravel ou WinDev, confiez-moi votre idée pour lui donner vie dans les meilleurs délais.'
                 : 'From store-ready Flutter cross-platform mobile apps to full-scale Laravel or WinDev enterprise ERPs, let’s turn your idea into a high-performance digital product.'}
@@ -33,7 +33,7 @@ export const HireMeSection: React.FC<HireMeSectionProps> = ({ lang }) => {
                 href={PORTFOLIO_DATA.profile.whatsapp}
                 target="_blank"
                 rel="noreferrer"
-                className="px-7 py-3.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-2"
+                className="px-7 py-3.5 rounded-lg bg-white text-slate-900 hover:bg-slate-100 dark:bg-sky-500 dark:hover:bg-sky-400 dark:text-slate-950 font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-2"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>{lang === 'fr' ? 'Me recruter / WhatsApp' : 'Hire Me'}</span>
@@ -41,8 +41,8 @@ export const HireMeSection: React.FC<HireMeSectionProps> = ({ lang }) => {
               </a>
 
               <a
-                href="#contact"
-                className="px-6 py-3.5 rounded-lg border border-slate-600 bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-semibold text-xs uppercase tracking-wider transition-all"
+                href="#contact-section"
+                className="px-6 py-3.5 rounded-lg border border-white/40 text-white hover:bg-white/10 dark:border-slate-600 dark:bg-slate-800/80 dark:hover:bg-slate-700 dark:text-slate-200 font-semibold text-xs uppercase tracking-wider transition-all"
               >
                 <span>{lang === 'fr' ? 'Formulaire de contact' : 'Send Message'}</span>
               </a>
